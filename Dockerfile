@@ -23,8 +23,12 @@ RUN curl -fsSL https://pkgs.tailscale.com/stable/debian/bullseye.noarmor.gpg | g
     apt-get install -y tailscale && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Copy entrypoint script
+# Copy scripts
 COPY entrypoint.sh /entrypoint.sh
+COPY healthcheck.py /healthcheck.py
 RUN chmod +x /entrypoint.sh
+
+# Expose health check port
+EXPOSE 8080
 
 ENTRYPOINT ["/entrypoint.sh"]
